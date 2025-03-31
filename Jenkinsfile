@@ -1,6 +1,10 @@
+def cloneIfNotExist(repoName, repoUrl) {
+    bat "IF NOT EXIST ${repoName} git clone ${repoUrl}"
+}
+
 def installDependencies() {
     echo 'Checking if python-greetings repo is already cloned...'
-    bat 'IF NOT EXIST python-greetings git clone https://github.com/mtararujs/python-greetings.git'
+    cloneIfNotExist('python-greetings', 'https://github.com/mtararujs/python-greetings.git')
 
     echo 'PYTHONPATH:'
     bat "echo %PYTHONPATH%"
@@ -13,7 +17,7 @@ def installDependencies() {
 
 def deploy(envName, port) {
     echo "Deploying to ${envName} environment..."
-    bat 'IF NOT EXIST python-greetings git clone https://github.com/mtararujs/python-greetings.git'
+    cloneIfNotExist('python-greetings', 'https://github.com/mtararujs/python-greetings.git')
     bat """
         cd python-greetings
         pm2 delete greetings-app-${envName} & EXIT /B 0
@@ -23,7 +27,7 @@ def deploy(envName, port) {
 
 def test(envName) {
     echo "Running tests on ${envName} environment..."
-    bat 'IF NOT EXIST course-js-api-framework git clone https://github.com/mtararujs/course-js-api-framework.git'
+    cloneIfNotExist('course-js-api-framework', 'https://github.com/mtararujs/course-js-api-framework.git')
     bat """
         cd course-js-api-framework
         npm install
