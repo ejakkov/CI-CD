@@ -8,8 +8,9 @@ pipeline {
                 bat 'if exist python-greetings rmdir /s /q python-greetings'
                 echo 'Cloning repository...'
                 bat 'git clone https://github.com/mtararujs/python-greetings.git'
+                echo 'PYTHONPATHL:' 
 
-                bat "echo %PATH%"
+                bat "echo %PYTHONPATH%"
                 echo 'Listing contents of cloned repository...'
                 bat 'dir python-greetings'
 
