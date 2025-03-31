@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        PATH = "C:\Users\ervin\AppData\Local\Programs\Python\Python39;$PATH"
+    }
     stages {
         stage('install-pip-deps') {
             steps {
