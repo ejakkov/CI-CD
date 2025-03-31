@@ -12,11 +12,7 @@ pipeline {
                 echo 'Listing contents of cloned repository...'
                 bat 'dir python-greetings'
 
-                bat 'where python'
-                bat 'python --version'
-                bat 'python -m pip --version'
-                echo 'Installing dependencies using pip3...'
-                bat 'pip3 install -r python-greetings\\requirements.txt'
+                bat 'pip install -r python-greetings\\requirements.txt'
             }
         }
 
