@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Installing Python dependencies using pip...'
                 // bat 'pip install -r requirements.txt'
-                sh "ls"
+                bat "ls"
             }
         }
 
