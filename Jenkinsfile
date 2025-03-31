@@ -19,7 +19,7 @@ pipeline {
                 echo 'Check python...'
                 bat 'python --version' 
 
-                bat 'pip install -r python-greetings\\requirements.txt'
+                bat 'pip3 install -r python-greetings\\requirements.txt'
             }
         }
 
