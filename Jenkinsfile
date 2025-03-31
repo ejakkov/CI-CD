@@ -33,7 +33,7 @@ pipeline {
                 bat 'pm2 delete greetings-app-dev & set "errorlevel=0"'
         
                 echo 'Starting PM2 app for dev on port 7001...'
-                bat 'pm2 start python-greetings\\app.py --name greetings-app-dev -- --port 7001'
+                bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
             }
         }
 
