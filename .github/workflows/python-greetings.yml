@@ -39,7 +39,7 @@ jobs:
           path: python-greetings
 
       - name: Stopping existing DEV environment (if any)
-        run: cmd /c "pm2 delete greetings-app-dev & exit /b 0"
+        run: cmd /c "pm2 delete greetings-app-dev & EXIT /B 0"
         working-directory: python-greetings
 
       - name: Starting new DEV instance on port 7001
