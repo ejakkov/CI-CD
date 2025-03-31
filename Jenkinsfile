@@ -9,6 +9,7 @@ pipeline {
                 echo 'Cloning repository...'
                 bat 'git clone https://github.com/mtararujs/python-greetings.git'
 
+                bat "echo %PATH%"
                 echo 'Listing contents of cloned repository...'
                 bat 'dir python-greetings'
 
