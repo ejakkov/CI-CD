@@ -14,7 +14,10 @@ pipeline {
                 echo 'Listing contents of cloned repository...'
                 bat 'dir python-greetings'
 
-                bat 'C:\Users\ervin\AppData\Local\Programs\Python\Python39\python.exe -m pip install -r python-greetings\\requirements.txt'
+                echo 'Check python...'
+                bat 'python --version' 
+
+                bat 'pip install -r python-greetings\\requirements.txt'
             }
         }
 
