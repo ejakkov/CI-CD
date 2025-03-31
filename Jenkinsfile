@@ -4,6 +4,8 @@ pipeline {
     stages {
         stage('install-pip-deps') {
             steps {
+                echo 'Cleaning up any existing python-greetings folder...'
+                bat 'if exist python-greetings rmdir /s /q python-greetings'
                 echo 'Cloning repository...'
                 bat 'git clone https://github.com/mtararujs/python-greetings.git'
 
