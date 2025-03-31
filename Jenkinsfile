@@ -1,40 +1,3 @@
-def cloneIfNotExist(repoName, repoUrl) {
-    bat "IF NOT EXIST ${repoName} git clone ${repoUrl}"
-}
-
-def installDependencies() {
-    echo 'Checking if python-greetings repo is already cloned...'
-    cloneIfNotExist('python-greetings', 'https://github.com/mtararujs/python-greetings.git')
-
-    echo 'PYTHONPATH:'
-    bat "echo %PYTHONPATH%"
-    echo 'Listing contents of cloned repository...'
-    bat 'dir python-greetings'
-    echo 'Check python...'
-    bat 'python --version' 
-    bat 'python -m pip install -r python-greetings\\requirements.txt'
-}
-
-def deploy(envName, port) {
-    echo "Deploying to ${envName} environment..."
-    cloneIfNotExist('python-greetings', 'https://github.com/mtararujs/python-greetings.git')
-    bat """
-        cd python-greetings
-        pm2 delete greetings-app-${envName} & EXIT /B 0
-        pm2 start app.py --name greetings-app-${envName} -- --port ${port}
-    """
-}
-
-def test(envName) {
-    echo "Running tests on ${envName} environment..."
-    cloneIfNotExist('course-js-api-framework', 'https://github.com/mtararujs/course-js-api-framework.git')
-    bat """
-        cd course-js-api-framework
-        npm install
-        npm run greetings greetings_${envName}
-    """
-}
-
 pipeline {
     agent any
     environment {
@@ -113,4 +76,41 @@ pipeline {
             }
         }
     }
+}
+
+def cloneIfNotExist(repoName, repoUrl) {
+    bat "IF NOT EXIST ${repoName} git clone ${repoUrl}"
+}
+
+def installDependencies() {
+    echo 'Checking if python-greetings repo is already cloned...'
+    cloneIfNotExist('python-greetings', 'https://github.com/mtararujs/python-greetings.git')
+
+    echo 'PYTHONPATH:'
+    bat "echo %PYTHONPATH%"
+    echo 'Listing contents of cloned repository...'
+    bat 'dir python-greetings'
+    echo 'Check python...'
+    bat 'python --version' 
+    bat 'python -m pip install -r python-greetings\\requirements.txt'
+}
+
+def deploy(envName, port) {
+    echo "Deploying to ${envName} environment..."
+    cloneIfNotExist('python-greetings', 'https://github.com/mtararujs/python-greetings.git')
+    bat """
+        cd python-greetings
+        pm2 delete greetings-app-${envName} & EXIT /B 0
+        pm2 start app.py --name greetings-app-${envName} -- --port ${port}
+    """
+}
+
+def test(envName) {
+    echo "Running tests on ${envName} environment..."
+    cloneIfNotExist('course-js-api-framework', 'https://github.com/mtararujs/course-js-api-framework.git')
+    bat """
+        cd course-js-api-framework
+        npm install
+        npm run greetings greetings_${envName}
+    """
 }
