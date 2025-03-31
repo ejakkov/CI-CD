@@ -4,9 +4,14 @@ pipeline {
     stages {
         stage('install-pip-deps') {
             steps {
-                echo 'Installing Python dependencies using pip...'
-                // bat 'pip install -r requirements.txt'
-                bat "dir"
+                echo 'Cloning repository...'
+                bat 'git clone https://github.com/mtararujs/python-greetings.git'
+
+                echo 'Listing contents of cloned repository...'
+                bat 'dir python-greetings'
+
+                echo 'Installing dependencies using pip3...'
+                bat 'pip3 install -r python-greetings\\requirements.txt'
             }
         }
 
