@@ -30,7 +30,7 @@ pipeline {
                 bat 'git clone https://github.com/mtararujs/python-greetings.git'
         
                 echo 'Stopping any existing PM2 app for dev...'
-                bat 'pm2 delete greetings-app-dev & set "errorlevel=0"'
+                bat 'pm2 delete greetings-app-dev & EXIT /B 0'
         
                 echo 'Starting PM2 app for dev on port 7001...'
                 bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
