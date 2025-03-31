@@ -43,5 +43,5 @@ jobs:
         working-directory: python-greetings
 
       - name: Starting new DEV instance on port 7001
-        run: pm2 start app.py --name greetings-app-dev -- --port 7001
+        run: cmd /c "pm2 start app.py --name greetings-app-dev -- --port 7001"
         working-directory: python-greetings
