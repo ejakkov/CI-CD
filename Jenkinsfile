@@ -1,3 +1,36 @@
+def installDependencies() {
+    echo 'Checking if python-greetings repo is already cloned...'
+    bat 'IF NOT EXIST python-greetings git clone https://github.com/mtararujs/python-greetings.git'
+
+    echo 'PYTHONPATH:'
+    bat "echo %PYTHONPATH%"
+    echo 'Listing contents of cloned repository...'
+    bat 'dir python-greetings'
+    echo 'Check python...'
+    bat 'python --version' 
+    bat 'python -m pip install -r python-greetings\\requirements.txt'
+}
+
+def deploy(envName, port) {
+    echo "Deploying to ${envName} environment..."
+    bat 'IF NOT EXIST python-greetings git clone https://github.com/mtararujs/python-greetings.git'
+    bat """
+        cd python-greetings
+        pm2 delete greetings-app-${envName} & EXIT /B 0
+        pm2 start app.py --name greetings-app-${envName} -- --port ${port}
+    """
+}
+
+def test(envName) {
+    echo "Running tests on ${envName} environment..."
+    bat 'IF NOT EXIST course-js-api-framework git clone https://github.com/mtararujs/course-js-api-framework.git'
+    bat """
+        cd course-js-api-framework
+        npm install
+        npm run greetings greetings_${envName}
+    """
+}
+
 pipeline {
     agent any
     environment {
@@ -6,83 +39,73 @@ pipeline {
     stages {
         stage('install-pip-deps') {
             steps {
-                echo 'Cleaning up any existing python-greetings folder...'
-                bat 'if exist python-greetings rmdir /s /q python-greetings'
-                echo 'Cloning repository...'
-                bat 'git clone https://github.com/mtararujs/python-greetings.git'
-                echo 'PYTHONPATHL:' 
-
-                bat "echo %PYTHONPATH%"
-                echo 'Listing contents of cloned repository...'
-                bat 'dir python-greetings'
-
-                echo 'Check python...'
-                bat 'python --version' 
-
-                bat 'python -m pip install -r python-greetings\\requirements.txt'
+                script {
+                    installDependencies()
+                }
             }
         }
 
         stage('deploy-to-dev') {
             steps {
-                echo 'Deploying to development environment...'
-                bat 'if exist python-greetings rmdir /s /q python-greetings'
-                bat 'git clone https://github.com/mtararujs/python-greetings.git'
-        
-                echo 'Stopping any existing PM2 app for dev...'
-                bat 'pm2 delete greetings-app-dev & EXIT /B 0'
-        
-                echo 'Starting PM2 app for dev on port 7001...'
-                bat 'pm2 start app.py --name greetings-app-dev -- --port 7001'
+                script {
+                    deploy('dev', 7001)
+                }
             }
         }
 
         stage('tests-on-dev') {
             steps {
-                echo 'Running tests on development environment...'
-                // bat 'call test-dev.bat'
+                script {
+                    test('dev')
+                }
             }
         }
 
         stage('deploy-to-staging') {
             steps {
-                echo 'Deploying to staging environment...'
-                // bat 'call deploy-staging.bat'
+                script {
+                    deploy('staging', 7002)
+                }
             }
         }
 
         stage('tests-on-staging') {
             steps {
-                echo 'Running tests on staging environment...'
-                // bat 'call test-staging.bat'
+                script {
+                    test('staging')
+                }
             }
         }
 
         stage('deploy-to-preprod') {
             steps {
-                echo 'Deploying to pre-production environment...'
-                // bat 'call deploy-preprod.bat'
+                script {
+                    deploy('preprod', 7003)
+                }
             }
         }
 
         stage('tests-on-preprod') {
             steps {
-                echo 'Running tests on pre-production environment...'
-                // bat 'call test-preprod.bat'
+                script {
+                    test('preprod')
+                }
             }
         }
 
         stage('deploy-to-prod') {
             steps {
-                echo 'Deploying to production environment...'
-                // bat 'call deploy-prod.bat'
+                script {
+                    deploy('prod', 7004)
+                }
             }
         }
 
         stage('tests-on-prod') {
             steps {
-                echo 'Running tests on production environment...'
-                // bat 'call test-prod.bat'
+                script {
+                    test('prod')
+                }
             }
         }
     }
