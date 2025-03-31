@@ -24,3 +24,23 @@ jobs:
           python3 --version
           pip3 install -r requirements.txt
         working-directory: python-greetings
+
+   deploy-to-dev:
+      name: Deploy to DEV
+      runs-on: self-hosted
+      needs: install-pip-deps
+      steps:
+        - name: Checkout pipeline repo
+          uses: actions/checkout@v4
+  
+        - name: Checkout python-greetings repo
+          uses: actions/checkout@v4
+          with:
+            repository: mtararujs/python-greetings
+            path: python-greetings
+  
+        - name: Deploying to DEV environment...
+          run: |
+            pm2 delete greetings-app-dev & EXIT /B 0
+            pm2 start app.py --name greetings-app-dev -- --port 7001
+          working-directory: python-greetings
