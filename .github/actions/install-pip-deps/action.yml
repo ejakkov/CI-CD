@@ -13,9 +13,11 @@ runs:
       with:
         repository: mtararujs/python-greetings
         path: ${{ inputs.repo-path }}
+      shell: cmd
 
     - name: Installing all required dependencies...
       run: |
         python3 --version
         pip3 install -r requirements.txt
       working-directory: ${{ inputs.repo-path }}
+      shell: cmd
