@@ -39,9 +39,7 @@ jobs:
           path: python-greetings
 
       - name: Stopping existing DEV environment (if any)
-        shell: pwsh
-        run: |
-          pm2 delete greetings-app-dev
+        run: cmd /c "pm2 delete greetings-app-dev & EXIT /B 0"
         working-directory: python-greetings
         continue-on-error: true
 
