@@ -1,0 +1,22 @@
+name: Run Tests
+description: Install npm dependencies and run tests for the specific environment
+inputs:
+  env-name:
+    description: The environment name for which to run tests (dev, staging, prod)
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout course-js-api-framework repo
+      uses: actions/checkout@v4
+      with:
+        repository: mtararujs/course-js-api-framework
+        path: course-js-api-framework
+
+    - name: Installing npm dependencies
+      run: npm install
+      working-directory: course-js-api-framework
+
+    - name: Running tests
+      run: npm run greetings greetings_${{ inputs.env-name }}
+      working-directory: course-js-api-framework

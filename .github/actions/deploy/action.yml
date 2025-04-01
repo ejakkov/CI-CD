@@ -1,0 +1,25 @@
+name: Deploy Application
+description: Deploy the application using pm2
+inputs:
+  app-name:
+    description: The name of the app to deploy
+    required: true
+  port:
+    description: The port number to start the application on
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout python-greetings repo
+      uses: actions/checkout@v4
+      with:
+        repository: mtararujs/python-greetings
+        path: python-greetings
+
+    - name: Delete existing pm2 service
+      run: cmd /c "pm2 delete greetings-app-${{ inputs.app-name }} & EXIT /B 0"
+      working-directory: python-greetings
+
+    - name: Starting new instance
+      run: cmd /c "pm2 start app.py --name greetings-app-${{ inputs.app-name }} -- --port ${{ inputs.port }}"
+      working-directory: python-greetings

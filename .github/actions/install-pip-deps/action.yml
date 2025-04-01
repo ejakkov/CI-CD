@@ -1,0 +1,20 @@
+name: Install Python Dependencies
+description: Install Python dependencies for the python-greetings repo
+inputs:
+  repo-path:
+    description: Path to the repo where the dependencies are defined
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout python-greetings repo
+      uses: actions/checkout@v4
+      with:
+        repository: mtararujs/python-greetings
+        path: ${{ inputs.repo-path }}
+
+    - name: Installing all required dependencies...
+      run: |
+        python3 --version
+        pip3 install -r requirements.txt
+      working-directory: ${{ inputs.repo-path }}
