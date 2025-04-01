@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: false
 
       - name: Checkout python-greetings repo
         uses: actions/checkout@v4
@@ -75,6 +78,9 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: false
 
       - name: Checkout python-greetings repo
         uses: actions/checkout@v4
@@ -97,6 +103,9 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: false
 
       - name: Checkout course-js-api-framework repo
         uses: actions/checkout@v4
@@ -117,7 +126,10 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
+          clean: false
+      
       - name: Checkout python-greetings repo
         uses: actions/checkout@v4
         with:
@@ -139,6 +151,9 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: false
 
       - name: Checkout course-js-api-framework repo
         uses: actions/checkout@v4
@@ -159,6 +174,9 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: false
 
       - name: Checkout python-greetings repo
         uses: actions/checkout@v4
@@ -181,6 +199,9 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: false
 
       - name: Checkout course-js-api-framework repo
         uses: actions/checkout@v4
