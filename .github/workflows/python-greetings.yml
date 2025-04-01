@@ -41,9 +41,12 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
 
-      - name: Stopping existing DEV environment (if any)
-        run: cmd /c "pm2 delete greetings-app-dev & EXIT /B 0"
-        working-directory: python-greetings
+      - name: Delete existing pm2 service
+        run: |
+          $env:RUNNER_TRACKING_ID = ""
+          pm2 delete "greetings-app-dev"
+          exit 0
+        shell: pwsh
 
       - name: Starting new DEV instance on port 7001
         run: cmd /c "pm2 start app.py --name greetings-app-dev -- --port 7001"
@@ -88,9 +91,12 @@ jobs:
           repository: mtararujs/python-greetings
           path: python-greetings
 
-      - name: Stopping existing STAGING environment (if any)
-        run: cmd /c "pm2 delete greetings-app-staging & EXIT /B 0"
-        working-directory: python-greetings
+      - name: Delete existing pm2 service
+        run: |
+          $env:RUNNER_TRACKING_ID = ""
+          pm2 delete "greetings-app-staging"
+          exit 0
+        shell: pwsh
 
       - name: Starting new STAGING instance on port 7002
         run: cmd /c "pm2 start app.py --name greetings-app-staging -- --port 7002"
