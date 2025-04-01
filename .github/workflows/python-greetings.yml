@@ -53,13 +53,22 @@ jobs:
     steps:
       - name: Checkout pipeline repo
         uses: actions/checkout@v4
-
+  
       - name: Checkout course-js-api-framework repo
         uses: actions/checkout@v4
         with:
           repository: mtararujs/course-js-api-framework
           path: course-js-api-framework
-
+  
+      - name: Wait for Python app to be ready
+        run: |
+          echo "Waiting for http://localhost:7001 to respond..."
+          for i in {1..10}; do
+            curl --silent http://localhost:7001/ && break
+            echo "Retrying in 2s..."
+            sleep 2
+          done
+  
       - name: Installing npm dependencies and running tests on DEV...
         run: |
           npm install
