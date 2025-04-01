@@ -42,11 +42,8 @@ jobs:
           path: python-greetings
 
       - name: Delete existing pm2 service
-        shell: pwsh
-        run: |
-            $env:RUNNER_TRACKING_ID = ""
-            pm2 delete "greetings-app-dev"
-            exit 0
+        run: cmd /c "pm2 delete greetings-app-dev & EXIT /B 0"
+        working-directory: python-greetings
 
       - name: Starting new DEV instance on port 7001
         run: cmd /c "pm2 start app.py --name greetings-app-dev -- --port 7001"
@@ -92,14 +89,11 @@ jobs:
           path: python-greetings
 
       - name: Delete existing pm2 service
-        run: |
-          $env:RUNNER_TRACKING_ID = ""
-          pm2 delete "greetings-app-staging"
-          exit 0
-        shell: pwsh
+        run: cmd /c "pm2 delete greetings-app-stg & EXIT /B 0"
+        working-directory: python-greetings
 
       - name: Starting new STAGING instance on port 7002
-        run: cmd /c "pm2 start app.py --name greetings-app-staging -- --port 7002"
+        run: cmd /c "pm2 start app.py --name greetings-app-stg -- --port 7002"
         working-directory: python-greetings
 
   tests-on-staging:
