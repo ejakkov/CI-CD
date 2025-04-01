@@ -5,7 +5,7 @@ inputs:
     description: The environment name for which to run tests (dev, staging, prod)
     required: true
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Checkout course-js-api-framework repo
       uses: actions/checkout@v4
