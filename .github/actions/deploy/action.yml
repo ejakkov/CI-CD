@@ -18,8 +18,10 @@ runs:
 
     - name: Delete existing pm2 service
       run: cmd /c "pm2 delete greetings-app-${{ inputs.app-name }} & EXIT /B 0"
+      shell: cmd
       working-directory: python-greetings
 
     - name: Starting new instance
       run: cmd /c "pm2 start app.py --name greetings-app-${{ inputs.app-name }} -- --port ${{ inputs.port }}"
+      shell: cmd
       working-directory: python-greetings

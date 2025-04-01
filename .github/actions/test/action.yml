@@ -15,8 +15,10 @@ runs:
 
     - name: Installing npm dependencies
       run: npm install
+      shell: cmd
       working-directory: course-js-api-framework
 
     - name: Running tests
       run: npm run greetings greetings_${{ inputs.env-name }}
+      shell: cmd
       working-directory: course-js-api-framework
