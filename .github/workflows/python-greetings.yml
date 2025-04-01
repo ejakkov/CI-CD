@@ -42,11 +42,11 @@ jobs:
           path: python-greetings
 
       - name: Delete existing pm2 service
+        shell: pwsh
         run: |
           $env:RUNNER_TRACKING_ID = ""
           pm2 delete "greetings-app-dev"
           exit 0
-        shell: pwsh
 
       - name: Starting new DEV instance on port 7001
         run: cmd /c "pm2 start app.py --name greetings-app-dev -- --port 7001"
