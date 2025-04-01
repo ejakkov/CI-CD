@@ -65,3 +65,128 @@ jobs:
           npm install
           npm run greetings greetings_dev
         working-directory: course-js-api-framework
+  deploy-to-staging:
+    name: Deploy to STAGING
+    runs-on: self-hosted
+    needs: tests-on-dev
+    steps:
+      - name: Checkout pipeline repo
+        uses: actions/checkout@v4
+
+      - name: Checkout python-greetings repo
+        uses: actions/checkout@v4
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Stopping existing STAGING environment (if any)
+        run: cmd /c "pm2 delete greetings-app-staging & EXIT /B 0"
+        working-directory: python-greetings
+
+      - name: Starting new STAGING instance on port 7002
+        run: cmd /c "pm2 start app.py --name greetings-app-staging -- --port 7002"
+        working-directory: python-greetings
+
+  tests-on-staging:
+    name: Run Tests on STAGING
+    runs-on: self-hosted
+    needs: deploy-to-staging
+    steps:
+      - name: Checkout pipeline repo
+        uses: actions/checkout@v4
+
+      - name: Checkout course-js-api-framework repo
+        uses: actions/checkout@v4
+        with:
+          repository: mtararujs/course-js-api-framework
+          path: course-js-api-framework
+
+      - name: Installing npm dependencies and running tests on STAGING...
+        run: |
+          npm install
+          npm run greetings greetings_staging
+        working-directory: course-js-api-framework
+
+  deploy-to-preprod:
+    name: Deploy to PREPROD
+    runs-on: self-hosted
+    needs: tests-on-staging
+    steps:
+      - name: Checkout pipeline repo
+        uses: actions/checkout@v4
+
+      - name: Checkout python-greetings repo
+        uses: actions/checkout@v4
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Stopping existing PREPROD environment (if any)
+        run: cmd /c "pm2 delete greetings-app-preprod & EXIT /B 0"
+        working-directory: python-greetings
+
+      - name: Starting new PREPROD instance on port 7003
+        run: cmd /c "pm2 start app.py --name greetings-app-preprod -- --port 7003"
+        working-directory: python-greetings
+
+  tests-on-preprod:
+    name: Run Tests on PREPROD
+    runs-on: self-hosted
+    needs: deploy-to-preprod
+    steps:
+      - name: Checkout pipeline repo
+        uses: actions/checkout@v4
+
+      - name: Checkout course-js-api-framework repo
+        uses: actions/checkout@v4
+        with:
+          repository: mtararujs/course-js-api-framework
+          path: course-js-api-framework
+
+      - name: Installing npm dependencies and running tests on PREPROD...
+        run: |
+          npm install
+          npm run greetings greetings_preprod
+        working-directory: course-js-api-framework
+
+  deploy-to-prod:
+    name: Deploy to PROD
+    runs-on: self-hosted
+    needs: tests-on-preprod
+    steps:
+      - name: Checkout pipeline repo
+        uses: actions/checkout@v4
+
+      - name: Checkout python-greetings repo
+        uses: actions/checkout@v4
+        with:
+          repository: mtararujs/python-greetings
+          path: python-greetings
+
+      - name: Stopping existing PROD environment (if any)
+        run: cmd /c "pm2 delete greetings-app-prod & EXIT /B 0"
+        working-directory: python-greetings
+
+      - name: Starting new PROD instance on port 7004
+        run: cmd /c "pm2 start app.py --name greetings-app-prod -- --port 7004"
+        working-directory: python-greetings
+
+  tests-on-prod:
+    name: Run Tests on PROD
+    runs-on: self-hosted
+    needs: deploy-to-prod
+    steps:
+      - name: Checkout pipeline repo
+        uses: actions/checkout@v4
+
+      - name: Checkout course-js-api-framework repo
+        uses: actions/checkout@v4
+        with:
+          repository: mtararujs/course-js-api-framework
+          path: course-js-api-framework
+
+      - name: Installing npm dependencies and running tests on PROD...
+        run: |
+          npm install
+          npm run greetings greetings_prod
+        working-directory: course-js-api-framework
