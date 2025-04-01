@@ -6,7 +6,7 @@ inputs:
     required: true
 runs:
   using: "composite"
-  shell: cmd
+  shell: powershell
   steps:
     - name: Checkout python-greetings repo
       uses: actions/checkout@v4
