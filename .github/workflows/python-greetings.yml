@@ -10,23 +10,10 @@ jobs:
     name: Install Python Dependencies
     runs-on: self-hosted
     steps:
-      - name: Checkout pipeline repo
-        uses: actions/checkout@v4
+      - name: Install Python dependencies
+        uses: /actions/install-pip-deps
         with:
-          fetch-depth: 0
-          clean: false
-
-      - name: Checkout python-greetings repo
-        uses: actions/checkout@v4
-        with:
-          repository: mtararujs/python-greetings
-          path: python-greetings
-
-      - name: Installing all required dependencies...
-        run: |
-          python3 --version
-          pip3 install -r requirements.txt
-        working-directory: python-greetings
+          repo-path: python-greetings
 
   deploy-to-dev:
     name: Deploy to DEV
