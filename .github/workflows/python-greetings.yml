@@ -11,7 +11,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Install Python dependencies
-        uses: /actions/install-pip-deps
+        uses: ./.github/actions/install-pip-deps
         with:
           repo-path: python-greetings
 
