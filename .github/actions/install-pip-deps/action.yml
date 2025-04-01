@@ -6,15 +6,12 @@ inputs:
     required: true
 runs:
   using: "composite"
-  shell: cmd
   steps:
     - name: Checkout python-greetings repo
       uses: actions/checkout@v4
       with:
         repository: mtararujs/python-greetings
         path: ${{ inputs.repo-path }}
-      shell: cmd
-
     - name: Installing all required dependencies...
       run: |
         python3 --version
