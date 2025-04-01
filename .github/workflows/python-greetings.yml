@@ -116,7 +116,7 @@ jobs:
       - name: Installing npm dependencies and running tests on STAGING...
         run: |
           npm install
-          npm run greetings greetings_staging
+          npm run greetings greetings_stg
         working-directory: course-js-api-framework
 
   deploy-to-preprod:
