@@ -60,17 +60,10 @@ jobs:
           repository: mtararujs/course-js-api-framework
           path: course-js-api-framework
   
-      - name: Wait for Python app to be ready
-        run: |
-          echo "Waiting for http://localhost:7001 to respond..."
-          for i in {1..10}; do
-            curl --silent http://localhost:7001/ && break
-            echo "Retrying in 2s..."
-            sleep 2
-          done
-  
-      - name: Installing npm dependencies and running tests on DEV...
-        run: |
-          npm install
-          npm run greetings greetings_dev
+      - name: Installing npm dependencies on DEV...
+        run: "npm install"
+        working-directory: course-js-api-framework
+
+      - name: Running tests on DEV...
+        run: "npm run greetings greetings_dev"
         working-directory: course-js-api-framework
